@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>认证</title>
+    <script src="./bootstrap-3.3.7/js/jquery-3.3.1.min.js"></script>
+    <!-- 2、bootstrap组件引用-->
+    <link href="./bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="./bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <!-- 3、bootstrap-table组件引用-->
+    <link href="./boostrap-table-1.12.1/bootstrap-table.min.css" rel="stylesheet"/>
+    <script src="./boostrap-table-1.12.1/bootstrap-table.min.js"></script>
+    <script src="./boostrap-table-1.12.1/locale/bootstrap-table-zh-CN.min.js"></script><!--显示中文-->
+</head>
+<body>
+<h3 style="text-align:center; font-style:oblique;padding-top: 40px;">您需要现认证再操作</h3>
+
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    认证个人信息
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">认证个人信息</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="u1" class="col-md-4 control-label">学号</label>
+                    <div>
+                        <input type="text" class="form-control" id="u1" name="name"
+                               placeholder="请输入学号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u2" class="col-md-4 control-label">姓名</label>
+                    <div>
+                        <input type="text" class="form-control" id="u2" name="name"
+                               placeholder="请输入姓名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u3" class="col-md-4 control-label">班级</label>
+                    <div>
+                        <input type="text" class="form-control" id="u3" name="name"
+                               placeholder="请输入班级">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u4" class="col-md-4 control-label">学院</label>
+                    <div>
+                        <select id="u4" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u5" class="col-md-4 control-label">联系方式</label>
+                    <div>
+                        <input type="text" class="form-control" id="u5" name="name"
+                               placeholder="请输入联系方式">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u6" class="col-md-4 control-label">状态</label>
+                    <div>
+                        <select id="u6" class="form-control">
+                            <option value="0" disabled="disabled">-请选择危害程度-</option>
+                            <option value="0">未找到工作</option>
+                            <option value="1">待签三方</option>
+                            <option value="2">已签三方</option>
+                            <option value="3">考上研究生</option>
+                            <option value="4">保上研究生</option>
+                            <option value="5">出国留学</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u7" class="col-md-4 control-label">就业公司或学校</label>
+                    <div>
+                        <input type="text" class="form-control" id="u7" name="name"
+                               placeholder="请输入就业公司或学校（未签三方不填公司）">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="hid">关闭</button>
+                <button type="button" class="btn btn-primary" id="addUInfo">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<link href="./toastr/toastr.min.css" rel="stylesheet">
+<script src="./toastr/toastr.min.js"></script>
+<script src="./js/jquery.cookie.js"></script>
+<script>
+    var inst = [{
+        "instituteId": "whut001",
+        "name": "材料学院"
+    },
+        {
+            "instituteId": "whut002",
+            "name": "交通学院"
+        },
+        {
+            "instituteId": "whut003",
+            "name": "管理学院"
+        },
+        {
+            "instituteId": "whut004",
+            "name": "机电学院"
+        },
+        {
+            "instituteId": "whut005",
+            "name": "能动学院"
+        },
+        {
+            "instituteId": "whut006",
+            "name": "土建学院"
+        },
+        {
+            "instituteId": "whut007",
+            "name": "汽车学院"
+        },
+        {
+            "instituteId": "whut008",
+            "name": "资环学院"
+        },
+        {
+            "instituteId": "whut009",
+            "name": "信息学院"
+        },
+        {
+            "instituteId": "whut010",
+            "name": "计算机学院"
+        },
+        {
+            "instituteId": "whut011",
+            "name": "自动化学院"
+        },
+        {
+            "instituteId": "whut012",
+            "name": "航运学院"
+        },
+        {
+            "instituteId": "whut013",
+            "name": "物流学院"
+        },
+        {
+            "instituteId": "whut014",
+            "name": "理学院"
+        },
+        {
+            "instituteId": "whut015",
+            "name": "化生学院"
+        },
+        {
+            "instituteId": "whut016",
+            "name": "经济学院"
+        },
+        {
+            "instituteId": "whut017",
+            "name": "艺设学院"
+        },
+        {
+            "instituteId": "whut018",
+            "name": "外语学院"
+        },
+        {
+            "instituteId": "whut019",
+            "name": "文法学院"
+        },
+        {
+            "instituteId": "whut020",
+            "name": "政治学院"
+        },
+        {
+            "instituteId": "whut021",
+            "name": "马克思主义学院"
+        },
+        {
+            "instituteId": "whut022",
+            "name": "国教学院"
+        },
+        {
+            "instituteId": "whut023",
+            "name": "创业学院"
+        },
+        {
+            "instituteId": "whut024",
+            "name": "体育部"
+        },
+        {
+            "instituteId": "whut025",
+            "name": "网络学院"
+        },
+        {
+            "instituteId": "whut026",
+            "name": "职教学院"
+        }];
+
+    for (var i = 0; i < inst.length; i++) {
+        $("#u4").append("<option value=\"" + inst[i].name + "\">" + inst[i].name + "</option>");
+    }
+
+    $("#addUInfo").click(function () {
+        addUInfo();
+    });
+    function addUInfo() {
+        var userInfoId = $.trim($("#u1").val());
+        var name = $.trim($("#u2").val());
+        var stClass = $.trim($("#u3").val());
+        var phone = $.trim($("#u5").val());
+        var workStat = $.trim($("#u6").val());
+        var instituteId = $.trim($("#u4").val());
+        var company = $.trim($("#u7").val());
+
+        if (userInfoId == null || name == null || phone == null || instituteId == null) {
+            toastr.error("信息不全！");
+        } else {
+            var subData = {
+                "token": $.cookie("schoolCareerCookie"),
+                "userInfoId": userInfoId,
+                "name": name,
+                "stClass": stClass,
+                "phone": phone,
+                "workStat": workStat,
+                "instituteId": instituteId,
+                "company": company
+            };
+            $.ajax({
+                type: "POST",
+                url: "./addUserInfo",
+                dataType: "json",
+                data: JSON.stringify(subData),
+                contentType: "application/json; charset=utf-8",
+                success: function (resp) {
+                    if (resp.status == 200) {
+                        toastr.success("添加成功");
+                        $("#hid").click();
+                        window.location.href = "./index1.html";
+                    } else {
+                        toastr.error("添加失败原因：" + resp.msg);
+                    }
+                },
+                error: function (resp) {
+                    toastr.error("错误代码：" + resp.status);
+                }
+            });
+        }
+    }
+</script>
+</body>
+</html>

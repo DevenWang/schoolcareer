@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="./bootstrap-3.3.7/js/jquery-3.3.1.min.js"></script>
+    <!-- 2、bootstrap组件引用-->
+    <link href="./bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="./bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <!-- 3、bootstrap-table组件引用-->
+    <link href="./boostrap-table-1.12.1/bootstrap-table.min.css" rel="stylesheet"/>
+    <script src="./boostrap-table-1.12.1/bootstrap-table.min.js"></script>
+    <script src="./boostrap-table-1.12.1/locale/bootstrap-table-zh-CN.min.js"></script><!--显示中文-->
+    <style>
+        body {
+            background-image: url('./img/whutlogo.png');
+            background-color: #b0c4de;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            padding-top: 70px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" id="index" style="font-style:oblique">武汉理工大学就业信息管理系统</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="text-align: center;">
+
+            <ul class="nav navbar-nav " style="display: inline-block;float: none;">
+                <li><a href="#" id="all">全部招聘信息</a></li>
+                <li><a href="#" id="part">本专业招聘信息</a></li>
+                <li><a href="#" id="others">其他专业招聘信息</a></li>
+                <li><a href="#" id="mycoll">收藏的招聘信息</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <!--<form class="navbar-form navbar-left" role="search" target="rfFrame">-->
+                    <!--<div class="form-group">-->
+                        <!--<input id="searchText1" type="text" class="form-control" placeholder="搜索公司">-->
+                    <!--</div>-->
+                    <!--<button class="btn btn-default" id="search">搜索</button>-->
+                    <!--<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>-->
+                <!--</form>-->
+                <li><a href="#" id="userInfo" data-toggle="modal" data-target="#myModal">个人中心</a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<!--&lt;!&ndash; Button trigger modal &ndash;&gt;-->
+<!--<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">-->
+<!--认证个人信息-->
+<!--</button>-->
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">认证个人信息</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="u1" class="col-md-4 control-label">学号</label>
+                    <div>
+                        <input type="text" class="form-control" id="u1" name="name"
+                               placeholder="请输入学号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u2" class="col-md-4 control-label">姓名</label>
+                    <div>
+                        <input type="text" class="form-control" id="u2" name="name"
+                               placeholder="请输入姓名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u3" class="col-md-4 control-label">班级</label>
+                    <div>
+                        <input type="text" class="form-control" id="u3" name="name"
+                               placeholder="请输入班级">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u4" class="col-md-4 control-label">学院</label>
+                    <div>
+                        <select id="u4" class="form-control"></select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u5" class="col-md-4 control-label">联系方式</label>
+                    <div>
+                        <input type="text" class="form-control" id="u5" name="name"
+                               placeholder="请输入联系方式">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u6" class="col-md-4 control-label">状态</label>
+                    <div>
+                        <select id="u6" class="form-control">
+                            <option value="0" disabled="disabled">-请选择危害程度-</option>
+                            <option value="0">未找到工作</option>
+                            <option value="1">待签三方</option>
+                            <option value="2">已签三方</option>
+                            <option value="3">考上研究生</option>
+                            <option value="4">保上研究生</option>
+                            <option value="5">出国留学</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u7" class="col-md-4 control-label">就业公司或学校</label>
+                    <div>
+                        <input type="text" class="form-control" id="u7" name="name"
+                               placeholder="请输入就业公司或学校（未签三方不填公司）">
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" id="hid">关闭</button>
+                <button type="button" class="btn btn-primary" id="addUInfo">添加</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<a href="#" id="mYcheck" data-toggle="modal" data-target="#myModal4" hidden></a></li>
+<div class="modal fade" id="myModal4" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">详细信息</h4>
+            </div>
+
+            <div class="modal-body" id="myText">
+
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-md-1">
+</div>
+<div id="myPanel" class="col-md-10">
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="p-title">标题</div>
+
+        <div class="panel-body">
+            <table id="table"></table>
+        </div>
+
+    </div>
+</div>
+
+<link href="./toastr/toastr.min.css" rel="stylesheet">
+<script src="./toastr/toastr.min.js"></script>
+<script src="./js/findInfo.js"></script>
+<script src="./js/jquery.cookie.js"></script>
+<script>
+    toastr.options = {
+        closeButton: true,
+        debug: false,
+        progressBar: true,
+        positionClass: "toast-top-full-width",
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+
+    var subData = {
+        "token": $.cookie("schoolCareerCookie"),
+    };
+    $.ajax({
+        type: "POST",
+        url: "./info",
+        dataType: "json",
+        data: JSON.stringify(subData),
+        contentType: "application/json; charset=utf-8",
+        success: function (resp) {
+            if (resp.status == 200) {
+
+            } else {
+                window.location.href = "index1.html";
+            }
+        },
+        error: function (resp) {
+            toastr.error("错误代码：" + resp.status);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "./findUserInfoById",
+        dataType: "json",
+        data: JSON.stringify(subData),
+        contentType: "application/json; charset=utf-8",
+        success: function (resp) {
+            if (resp.status == 200) {
+                if (resp.data == null) {
+                    window.location.href = "./index4.html";
+                }
+            }
+        },
+        error: function (resp) {
+            toastr.error("错误代码：" + resp.status);
+        }
+    });
+
+    $("#myPanel").hide();
+
+    $("#index").click(function () {
+        $("#myPanel").hide();
+    });
+
+    $("#all").click(function () {
+        $("#p-title").text("全部招聘信息");
+        $("#myPanel").show();
+        all();
+    });
+
+    $("#part").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("本专业招聘信息");
+        part();
+    });
+
+    $("#others").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("其他专业招聘信息");
+        others();
+    });
+
+    $("#mycoll").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("收藏的招聘信息");
+        mycoll();
+    });
+
+    $("#search").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("搜索结果");
+        search();
+    });
+
+    $("#addUInfo").click(function () {
+        addUInfo();
+    });
+
+    var inst = [{
+        "instituteId": "whut001",
+        "name": "材料学院"
+        },
+        {
+            "instituteId": "whut002",
+            "name": "交通学院"
+        },
+        {
+            "instituteId": "whut003",
+            "name": "管理学院"
+        },
+        {
+            "instituteId": "whut004",
+            "name": "机电学院"
+        },
+        {
+            "instituteId": "whut005",
+            "name": "能动学院"
+        },
+        {
+            "instituteId": "whut006",
+            "name": "土建学院"
+        },
+        {
+            "instituteId": "whut007",
+            "name": "汽车学院"
+        },
+        {
+            "instituteId": "whut008",
+            "name": "资环学院"
+        },
+        {
+            "instituteId": "whut009",
+            "name": "信息学院"
+        },
+        {
+            "instituteId": "whut010",
+            "name": "计算机学院"
+        },
+        {
+            "instituteId": "whut011",
+            "name": "自动化学院"
+        },
+        {
+            "instituteId": "whut012",
+            "name": "航运学院"
+        },
+        {
+            "instituteId": "whut013",
+            "name": "物流学院"
+        },
+        {
+            "instituteId": "whut014",
+            "name": "理学院"
+        },
+        {
+            "instituteId": "whut015",
+            "name": "化生学院"
+        },
+        {
+            "instituteId": "whut016",
+            "name": "经济学院"
+        },
+        {
+            "instituteId": "whut017",
+            "name": "艺设学院"
+        },
+        {
+            "instituteId": "whut018",
+            "name": "外语学院"
+        },
+        {
+            "instituteId": "whut019",
+            "name": "文法学院"
+        },
+        {
+            "instituteId": "whut020",
+            "name": "政治学院"
+        },
+        {
+            "instituteId": "whut021",
+            "name": "马克思主义学院"
+        },
+        {
+            "instituteId": "whut022",
+            "name": "国教学院"
+        },
+        {
+            "instituteId": "whut023",
+            "name": "创业学院"
+        },
+        {
+            "instituteId": "whut024",
+            "name": "体育部"
+        },
+        {
+            "instituteId": "whut025",
+            "name": "网络学院"
+        },
+        {
+            "instituteId": "whut026",
+            "name": "职教学院"
+        }];
+
+    for (var i = 0; i < inst.length; i++) {
+        $("#u4").append("<option value=\"" + inst[i].name + "\">" + inst[i].name + "</option>");
+    }
+
+</script>
+</body>
+</html>

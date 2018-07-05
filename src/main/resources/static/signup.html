@@ -1,0 +1,94 @@
+
+<div class="login-box">
+    <h3 class="login_welcome">欢迎注册</h3>
+    <div class="right_login" style="border:none;z-index: 9999">
+        <div>
+            <form id="login_form">
+                <div>
+                    <div class="login-item">
+                        <span class="span_user glyphicon glyphicon-user "></span>
+                        <input type="email" class="form-input" id="user" maxlength="21" placeholder="邮箱"
+                               name="userName" value="">
+                    </div>
+                </div>
+                <div>
+                    <div class="login-item">
+                        <span class="span_user glyphicon glyphicon-lock"></span>
+                        <input type="password" class="form-input" id="password" maxlength="18" placeholder="密码"
+                               name="password" value="">
+                    </div>
+                </div>
+                <div>
+                    <div class="login-item">
+                        <span class="span_user glyphicon glyphicon-lock"></span>
+                        <input type="password" class="form-input" id="re_password" maxlength="18" placeholder="确认密码"
+                               name="password" value="">
+                    </div>
+                </div>
+
+                <div>
+                    <div class="login-radio" style="text-align:center">
+                        <label class="radio-inline">
+                            <input type="radio" name="inlineRadioOptions" id="radio1" value="applicant"> 求职用户
+                        </label>
+                    </div>
+                </div>
+
+                <input type="button" id="register_b" class="formBtn-login" value="注 册"/>
+                <div>
+                    <p style="text-align: center"><a href="index1.html">点 我 登 录</a>
+                    </p>
+                </div>
+
+            </form>
+        </div>
+        <div class="clear"></div>
+        <div class="errorMsg" hidden>
+
+            <center>
+                <div class="ts"><img src="./images/ts.png">
+                </div>
+            </center>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    //注册
+    $("#register_b").click(function () {
+
+        var myreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        var userId = $("#user").val();
+        var pwd = $("#password").val();
+        var r_pwd = $("#re_password").val();
+        var type = $("input[name='inlineRadioOptions']:checked").val();
+
+        if (userId == null || pwd == null || r_pwd == null || type == null) {
+            toastr.error("请填写完整信息")
+        } else if (pwd != r_pwd) {
+            toastr.error("两次密码不同")
+        } else if (!myreg.test(userId)) {
+            toastr.error('提示\n\n请输入有效的E_mail！');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "./register",
+                data: {"id": userId, "pwd": pwd, "type": type},
+                dataType: "json",
+                success: function (resp) {
+                    if (resp.status != 200) {
+                        toastr.error(resp.msg);
+                    } else {
+                        toastr.info("注册成功");
+                        window.location.href = "./index1.html";
+                    }
+                },
+                error: function (resp) {
+                    toastr.error("访问出错！");
+                }
+            });
+        }
+    });
+</script>
+

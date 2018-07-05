@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../bootstrap-3.3.7/js/jquery-3.3.1.min.js"></script>
+    <!-- 2、bootstrap组件引用-->
+    <link href="../bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <!-- 3、bootstrap-table组件引用-->
+    <link href="../boostrap-table-1.12.1/bootstrap-table.min.css" rel="stylesheet"/>
+    <script src="../boostrap-table-1.12.1/bootstrap-table.min.js"></script>
+    <script src="../boostrap-table-1.12.1/locale/bootstrap-table-zh-CN.min.js"></script><!--显示中文-->
+    <style>
+        body {
+            background-image: url('../img/whutlogo.png');
+            background-color: #b0c4de;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            padding-top: 70px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" id="index" style="font-style:oblique">武汉理工大学就业信息管理系统</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="text-align: center;">
+
+            <ul class="nav navbar-nav " style="display: inline-block;float: none;">
+                <li><a href="#" id="myAll">已发布招聘信息</a></li>
+                <li><a href="#" id="outTime">已过期招聘信息</a></li>
+                <li><a href="#" id="working">未就业学生</a></li>
+                <li><a href="#" id="worker">已就业学生</a></li>
+                <li><a href="#" id="student">保研考研学生</a></li>
+                <li><a href="#" id="out">出国留学学生</a></li>
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <!--<form class="navbar-form navbar-left" role="search" target="rfFrame">-->
+                    <!--<div class="form-group">-->
+                        <!--<input id="searchText" type="text" class="form-control" placeholder="搜索学生">-->
+                    <!--</div>-->
+                    <!--<button class="btn btn-default" id="searchStu">搜索</button>-->
+                    <!--<iframe id="rfFrame" name="rfFrame" src="about:blank" style="display:none;"></iframe>-->
+                <!--</form>-->
+                <li><a href="#" id="addEr" data-toggle="modal" data-target="#myModal2">添加招聘信息</a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">添加招聘信息</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="form-group">
+                    <label for="u1" class="col-md-4 control-label">公司名称</label>
+                    <div>
+                        <input type="text" class="form-control" id="u1" name="name"
+                               placeholder="请输入公司名称">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u2" class="col-md-4 control-label">公司官网</label>
+                    <div>
+                        <input type="text" class="form-control" id="u2" name="name"
+                               placeholder="请输入公司官网">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u3" class="col-md-4 control-label">招聘内容</label>
+                    <div>
+                        <input type="text" class="form-control" id="u3" name="name"
+                               placeholder="请输入招聘内容">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="u4" class="col-md-4 control-label">截止时间</label>
+                    <div>
+                        <input type="text" class="form-control" id="u4" name="name"
+                               placeholder="格式如2018-06-06">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" id="hid">关闭</button>
+                    <button type="button" class="btn btn-primary" id="addRec">添加</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-1">
+</div>
+<div id="myPanel" class="col-md-10">
+    <div class="panel panel-primary">
+        <div class="panel-heading" id="p-title">标题</div>
+
+        <div class="panel-body">
+            <table id="table"></table>
+        </div>
+
+    </div>
+</div>
+
+<script src="../js/manager.js"></script>
+<script src="../js/jquery.cookie.js"></script>
+<link href="../toastr/toastr.min.css" rel="stylesheet">
+<script src="../toastr/toastr.min.js"></script>
+<script>
+    toastr.options = {
+        closeButton: true,
+        debug: false,
+        progressBar: true,
+        positionClass: "toast-top-full-width",
+        onclick: null,
+        showDuration: "300",
+        hideDuration: "1000",
+        timeOut: "1000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut"
+    };
+
+    var subData = {
+        "token": $.cookie("schoolCareerCookie"),
+    };
+    $.ajax({
+        type: "POST",
+        url: "../info",
+        dataType: "json",
+        data: JSON.stringify(subData),
+        contentType: "application/json; charset=utf-8",
+        success: function (resp) {
+            if (resp.status == 200) {
+
+            } else {
+                window.location.href = "../index1.html";
+            }
+        },
+        error: function (resp) {
+            toastr.error("错误代码：" + resp.status);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "../findUserInfoById",
+        dataType: "json",
+        data: JSON.stringify(subData),
+        contentType: "application/json; charset=utf-8",
+        success: function (resp) {
+            if (resp.status == 200) {
+                if (resp.data == null) {
+                    window.location.href = "../index4.html";
+                }
+            }
+        },
+        error: function (resp) {
+            toastr.error("错误代码：" + resp.status);
+        }
+    });
+
+    $("#myPanel").hide();
+
+    $("#index").click(function () {
+        $("#myPanel").hide();
+    });
+
+    $("#myAll").click(function () {
+        $("#p-title").text("已发布招聘信息");
+        $("#myPanel").show();
+        myAll();
+    });
+
+    $("#outTime").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("已过期招聘信息");
+        outTime();
+    });
+
+    $("#working").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("未就业学生");
+        working();
+    });
+
+    $("#worker").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("已就业学生");
+        worker();
+    });
+
+    $("#student").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("保研考研学生");
+        student();
+    });
+
+    $("#out").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("出国留学学生");
+        out();
+    });
+
+    $("#searchStu").click(function () {
+        $("#myPanel").show();
+        $("#p-title").text("搜索结果");
+        searchStu();
+    });
+    $("#addRec").click(function () {
+        addRec();
+    });
+
+</script>
+</body>
+</html>
